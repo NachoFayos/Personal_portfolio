@@ -1,7 +1,6 @@
 import { Section } from '@/components/section';
 import { experiences, profile, projects, stackGroups } from '@/data/portfolio';
 
-
 type QuickLink = {
   label: string;
   href: string;
@@ -9,19 +8,19 @@ type QuickLink = {
 };
 
 const quickLinks: QuickLink[] = [
-  { label: 'Ver proyectos', href: '#proyectos' },
-  { label: 'Descargar CV', href: profile.contact.cvUrl, external: true },
-  { label: 'Contactar', href: '#contacto' }
+  { label: './proyectos', href: '#proyectos' },
+  { label: './cv.pdf', href: profile.contact.cvUrl, external: true },
+  { label: './contacto', href: '#contacto' }
 ];
 
 export default function HomePage() {
   return (
     <main className="portfolio">
-      <section className="hero" id="inicio">
-        <p className="hero__eyebrow">Backend Developer</p>
-        <h1>{profile.name}</h1>
+      <section className="hero" id="inicio" aria-labelledby="hero-title">
+        <p className="section__command">$ whoami</p>
+        <h1 id="hero-title">{profile.name}</h1>
         <p className="hero__role">{profile.role}</p>
-        <p className="hero__headline">{profile.headline}</p>
+        <p className="hero__headline">{profile.headline}<span className="cursor" aria-hidden="true">▋</span></p>
         <nav className="hero__actions" aria-label="Acciones principales">
           {quickLinks.map((link) => (
             <a
@@ -37,21 +36,20 @@ export default function HomePage() {
         </nav>
       </section>
 
-      <Section id="sobre-mi" title="Sobre mí">
+      <Section id="sobre-mi" title="Sobre mí" commandLabel="$ cat about.md">
         <p>{profile.about}</p>
       </Section>
 
-      <Section id="experiencia" title="Experiencia">
-        <div className="card-grid">
+      <Section id="experiencia" title="Experiencia" commandLabel="$ ls experiencia/">
+        <div className="flow-list">
           {experiences.map((experience) => (
-            <article className="card" key={experience.company}>
-              <header>
+            <article className="entry" key={experience.company}>
+              <header className="entry__header">
                 <h3>{experience.company}</h3>
-                <p className="card__meta">
-                  {experience.role} · {experience.period}
-                </p>
+                <p className="entry__meta">{experience.role}</p>
+                <p className="entry__meta">{experience.period}</p>
               </header>
-              <ul>
+              <ul className="entry__list">
                 {experience.highlights.map((highlight) => (
                   <li key={highlight}>{highlight}</li>
                 ))}
@@ -61,34 +59,32 @@ export default function HomePage() {
         </div>
       </Section>
 
-      <Section id="proyectos" title="Proyectos">
-        <div className="card-grid">
+      <Section id="proyectos" title="Proyectos" commandLabel="$ ls proyectos --featured">
+        <div className="flow-list">
           {projects.map((project) => (
-            <article className="card" key={project.name}>
-              <header>
+            <article className="entry" key={project.name}>
+              <header className="entry__header">
                 <h3>{project.name}</h3>
-                <p className="card__meta">{project.type}</p>
+                <p className="entry__meta">{project.type}</p>
               </header>
               <p>{project.description}</p>
-              <p className="tag-list">
+              <ul className="tag-list" aria-label={`Tecnologías usadas en ${project.name}`}>
                 {project.stack.map((tech) => (
-                  <span className="tag" key={tech}>
-                    {tech}
-                  </span>
+                  <li className="tag" key={tech}>{tech}</li>
                 ))}
-              </p>
-              {project.status ? <p className="status">Estado: {project.status}</p> : null}
+              </ul>
+              {project.status ? <p className="status">status: {project.status}</p> : null}
             </article>
           ))}
         </div>
       </Section>
 
-      <Section id="stack" title="Stack técnico">
-        <div className="card-grid card-grid--compact">
+      <Section id="stack" title="Stack técnico" commandLabel="$ stack --list">
+        <div className="flow-list">
           {stackGroups.map((group) => (
-            <article className="card" key={group.title}>
+            <article className="entry" key={group.title}>
               <h3>{group.title}</h3>
-              <ul className="list-inline">
+              <ul className="inline-list">
                 {group.items.map((item) => (
                   <li key={item}>{item}</li>
                 ))}
@@ -98,19 +94,24 @@ export default function HomePage() {
         </div>
       </Section>
 
-      <Section id="contacto" title="Contacto" subtitle="Disponible para oportunidades backend y colaboración técnica.">
+      <Section
+        id="contacto"
+        title="Contacto"
+        commandLabel="$ contact --info"
+        subtitle="Disponible para oportunidades backend y colaboración técnica."
+      >
         <div className="contact-grid">
-          <div className="card">
-            <h3>Canales</h3>
-            <ul className="contact-links">
-              <li><a href={`mailto:${profile.contact.email}`}>{profile.contact.email}</a></li>
-              <li><a href={profile.contact.linkedin} target="_blank" rel="noreferrer">LinkedIn</a></li>
-              <li><a href={profile.contact.github} target="_blank" rel="noreferrer">GitHub</a></li>
-              <li><a href={profile.contact.cvUrl} target="_blank" rel="noreferrer">Descargar CV</a></li>
-            </ul>
+        <div className="entry">
+            <h3>canales</h3>
+            <dl className="contact-table">
+              <div><dt>email</dt><dd><a href={`mailto:${profile.contact.email}`}>{profile.contact.email}</a></dd></div>
+              <div><dt>linkedin</dt><dd><a href={profile.contact.linkedin} target="_blank" rel="noreferrer">/linkedin</a></dd></div>
+              <div><dt>github</dt><dd><a href={profile.contact.github} target="_blank" rel="noreferrer">/github</a></dd></div>
+              <div><dt>cv</dt><dd><a href={profile.contact.cvUrl} target="_blank" rel="noreferrer">./cv.pdf</a></dd></div>
+            </dl>
           </div>
-          <form className="card contact-form" aria-label="Formulario de contacto">
-            <h3>Escríbeme</h3>
+          <form className="entry contact-form" aria-label="Formulario de contacto">
+            <h3>mensaje.txt</h3>
             <label>
               Nombre
               <input type="text" name="name" placeholder="Tu nombre" />
@@ -124,7 +125,7 @@ export default function HomePage() {
               <textarea name="message" rows={5} placeholder="Cuéntame en qué puedo ayudarte" />
             </label>
             <button type="button" className="button button--muted" disabled>
-              Formulario en preparación
+            ./send-message --pending
             </button>
           </form>
         </div>
