@@ -21,6 +21,16 @@ body {
   line-height: 1.75;
 }
 
+::selection {
+  background: rgba(240, 165, 0, 0.26);
+  color: #ffb703;
+}
+
+::-moz-selection {
+  background: rgba(240, 165, 0, 0.26);
+  color: #ffb703;
+}
+
 a {
   color: inherit;
 }
@@ -57,7 +67,6 @@ a {
 h1,
 h2,
 h3,
-.hero__role,
 .hero__actions,
 .entry__meta,
 .tag,
@@ -69,7 +78,7 @@ h3,
 
 h1 {
   margin: 0;
-  font-size: clamp(1.9rem, 5vw, 2.9rem);
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
   line-height: 1.25;
 }
 
@@ -83,19 +92,35 @@ h3 {
   font-size: 1rem;
 }
 
-.hero__role {
-  margin: 0.35rem 0;
-  color: var(--text);
-  font-size: 1rem;
-}
-.hero__headline,
+.hero__output,
 .section__subtitle,
 .entry__meta,
 .status {
   color: var(--text-muted);
 }
-.hero__headline {
+.hero__prompt {
+  margin: 0 0 1rem;
+  color: var(--text-muted);
+  font-family: 'JetBrains Mono', 'SFMono-Regular', Consolas, monospace;
+  font-size: 0.86rem;
+}
+
+.hero__terminal {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.hero__line {
+  display: grid;
+  gap: 0.28rem;
+}
+
+.hero__output {
   margin: 0;
+  padding-left: 0.9rem;
+  font-family: 'JetBrains Mono', 'SFMono-Regular', Consolas, monospace;
+  color: var(--text);
+  line-height: 1.55;
 }
 
 .cursor {
@@ -110,10 +135,30 @@ h3 {
   }
 }
 .hero__actions {
-  margin-top: 1.25rem;
+  margin-top: 1.4rem;
   display: flex;
   gap: 0.6rem;
   flex-wrap: wrap;
+}
+
+.terminal-copy {
+  margin-top: 0.2rem;
+  display: grid;
+  gap: 0.55rem;
+}
+
+.terminal-copy p {
+  margin: 0;
+  padding-left: 0.9rem;
+  position: relative;
+}
+
+.terminal-copy p::before {
+  content: '>';
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+  font-family: 'JetBrains Mono', 'SFMono-Regular', Consolas, monospace;
 }
 
 .button {

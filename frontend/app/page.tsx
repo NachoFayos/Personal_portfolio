@@ -14,13 +14,25 @@ const quickLinks: QuickLink[] = [
 ];
 
 export default function HomePage() {
+  const aboutLines = profile.about.split('. ').filter(Boolean);
   return (
     <main className="portfolio">
       <section className="hero" id="inicio" aria-labelledby="hero-title">
-        <p className="section__command">$ whoami</p>
-        <h1 id="hero-title">{profile.name}</h1>
-        <p className="hero__role">{profile.role}</p>
-        <p className="hero__headline">{profile.headline}<span className="cursor" aria-hidden="true">▋</span></p>
+      <p className="hero__prompt">nacho@portfolio:~</p>
+        <div className="hero__terminal">
+          <div className="hero__line">
+            <p className="section__command">$ whoami</p>
+            <h1 id="hero-title">{profile.name}</h1>
+          </div>
+          <div className="hero__line">
+            <p className="section__command">$ cat role.txt</p>
+            <p className="hero__output">{profile.headline}</p>
+          </div>
+          <div className="hero__line">
+            <p className="section__command">$ echo $LOCATION</p>
+            <p className="hero__output">Valencia, España<span className="cursor" aria-hidden="true">▋</span></p>
+          </div>
+        </div>
         <nav className="hero__actions" aria-label="Acciones principales">
           {quickLinks.map((link) => (
             <a
@@ -37,7 +49,11 @@ export default function HomePage() {
       </section>
 
       <Section id="sobre-mi" title="Sobre mí" commandLabel="$ cat about.md">
-        <p>{profile.about}</p>
+      <div className="terminal-copy" aria-label="Descripción profesional">
+        {aboutLines.map((line) => (
+          <p key={line}>{line.trim().endsWith('.') ? line.trim() : `${line.trim()}.`}</p>
+        ))}
+      </div>
       </Section>
 
       <Section id="experiencia" title="Experiencia" commandLabel="$ ls experiencia/">
