@@ -99,14 +99,6 @@ export default function HomePage() {
         </div>
       </section>
 
-        <Section id="sobre-mi" title="Sobre mí" commandLabel="$ cat about.md" variant="about">
-          <div className="terminal-copy" aria-label="Descripción profesional">
-            {aboutLines.map((line) => (
-              <p key={line}>{line.trim().endsWith('.') ? line.trim() : `${line.trim()}.`}</p>
-            ))}
-          </div>
-        </Section>
-
         <Section
           id="experiencia"
           title="Experiencia"
