@@ -7,12 +7,6 @@ type QuickLink = {
   external?: boolean;
 };
 
-const quickLinks: QuickLink[] = [
-  { label: './proyectos', href: '#proyectos' },
-  { label: './cv.pdf', href: profile.contact.cvUrl, external: true },
-  { label: './contacto', href: '#contacto' }
-];
-
 const topLinks: QuickLink[] = [
   { label: './inicio', href: '#inicio' },
   { label: './cv', href: '#experiencia' },
@@ -53,45 +47,57 @@ export default function HomePage() {
       </header>
 
       <main className="portfolio" id="inicio">
-        <section className="hero" aria-labelledby="hero-title">
-          <p className="hero__prompt">nacho@portfolio:~</p>
+      <section className="intro-window" aria-labelledby="hero-title">
+        <header className="intro-window__bar">
+          <p className="intro-window__title">nacho@portfolio:~</p>
 
-          <div className="hero__terminal">
-            <div className="hero__line">
-              <p className="section__command">$ whoami</p>
-              <h1 id="hero-title">{profile.name}</h1>
-            </div>
+          <div className="intro-window__controls" aria-hidden="true">
+            <span className="window-control">
+              <span className="window-control__minimize-icon">—</span>
+            </span>
 
-            <div className="hero__line">
-              <p className="section__command">$ cat role.txt</p>
-              <p className="hero__output">{profile.headline}</p>
-            </div>
+            <span className="window-control">
+              <span className="window-control__maximize-icon">□</span>
+            </span>
 
-            <div className="hero__line">
-              <p className="section__command">$ echo $LOCATION</p>
-              <p className="hero__output">
-                Valencia, España
-                <span className="cursor" aria-hidden="true">
-                  ▋
-                </span>
-              </p>
-            </div>
+            <span className="window-control window-control--close">
+              <span className="window-control__close-icon">×</span>
+            </span>
+          </div>
+        </header>
+
+        <div className="intro-window__body">
+          <div className="intro-window__line">
+            <p className="section__command">$ whoami</p>
+            <h1 id="hero-title" className="intro-window__name">
+              {profile.name}
+            </h1>
           </div>
 
-          <nav className="hero__actions" aria-label="Acciones principales">
-            {quickLinks.map((link) => (
-              <a
-                key={link.label}
-                href={link.href}
-                className="button"
-                target={link.external ? '_blank' : undefined}
-                rel={link.external ? 'noreferrer' : undefined}
-              >
-                {link.label}
-              </a>
-            ))}
-          </nav>
-        </section>
+          <div className="intro-window__line">
+            <p className="section__command">$ cat role.txt</p>
+            <p className="intro-window__output">{profile.headline}</p>
+          </div>
+
+          <div className="intro-window__line">
+            <p className="section__command">$ echo $LOCATION</p>
+            <p className="intro-window__output">Valencia, España</p>
+          </div>
+
+          <div className="intro-window__line">
+            <p className="section__command">$ cat about.md</p>
+            <div className="terminal-copy" aria-label="Descripción profesional">
+              {aboutLines.map((line) => (
+                <p key={line}>{line.trim().endsWith('.') ? line.trim() : `${line.trim()}.`}</p>
+              ))}
+            </div>
+
+            <p className="intro-window__prompt-end" aria-hidden="true">
+              $<span className="cursor">▋</span>
+            </p>
+          </div>
+        </div>
+      </section>
 
         <Section id="sobre-mi" title="Sobre mí" commandLabel="$ cat about.md" variant="about">
           <div className="terminal-copy" aria-label="Descripción profesional">

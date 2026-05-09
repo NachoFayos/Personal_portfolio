@@ -151,7 +151,7 @@ a {
   background: rgba(240, 165, 0, 0.04);
 }
 
-.hero,
+.intro-window,
 .section {
   border: 1px solid var(--border);
   border-radius: 8px;
@@ -160,11 +160,18 @@ a {
     rgba(22, 22, 22, 0.95) 0%,
     rgba(15, 15, 15, 0.96) 100%
   );
+}
+
+.section {
   padding: 1.5rem;
 }
 
-.hero {
+.intro-window {
   margin-bottom: 2rem;
+  padding: 0;
+  border-radius: 10px;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.32);
+  overflow: hidden;
 }
 
 .section + .section {
@@ -198,10 +205,18 @@ a {
   font-size: 0.86rem;
 }
 
+.intro-window .section__command {
+  margin: 0 0 0.15rem;
+}
+
+.intro-window .terminal-copy {
+  margin-top: 0;
+  gap: 0.4rem;
+}
+
 h1,
 h2,
 h3,
-.hero__actions,
 .entry__meta,
 .tag,
 .status,
@@ -227,41 +242,126 @@ h3 {
 }
 
 .hero__output,
+.cursor {
+  margin-left: 0.2rem;
+  color: var(--accent);
+  animation: blink 1.1s steps(1) infinite;
+}
+
 .section__subtitle,
 .entry__meta,
 .status {
   color: var(--text-muted);
 }
 
-.hero__prompt {
-  margin: 0 0 1rem;
-  color: var(--text-muted);
+.intro-window__bar {
+  min-height: 44px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  background: transparent;
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0 0 0 1.15rem;
+}
+
+.intro-window__title {
+  margin: 0;
+  display: flex;
+  align-items: center;
   font-family: 'JetBrains Mono', 'SFMono-Regular', Consolas, monospace;
+  color: var(--text-muted);
   font-size: 0.86rem;
 }
 
-.hero__terminal {
-  display: grid;
-  gap: 0.9rem;
+.intro-window__controls {
+  display: flex;
+  align-items: stretch;
+  align-self: stretch;
+  margin-left: auto;
 }
 
-.hero__line {
+.window-control {
+  width: 46px;
+  height: 44px;
   display: grid;
-  gap: 0.3rem;
+  place-items: center;
+  border: none;
+  border-radius: 0;
+  background: transparent;
+  color: var(--text-muted);
+  user-select: none;
+  cursor: default;
+  transition:
+    background-color 140ms ease,
+    color 140ms ease;
 }
 
-.hero__output {
+.window-control:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text);
+}
+
+.window-control__minimize-icon,
+.window-control__maximize-icon,
+.window-control__close-icon {
+  display: block;
+  line-height: 1;
+  font-family: 'Segoe UI Symbol', 'Segoe UI', sans-serif;
+}
+
+.window-control__minimize-icon {
+  font-size: 0.6rem;
+  font-weight: 700;
+  transform: translateY(-2px) scaleX(1.35);
+}
+
+.window-control__maximize-icon {
+  font-size: 0.9rem;
+  font-weight: 700;
+  transform: translateY(-1px);
+}
+
+.window-control__close-icon {
+  font-size: 1.5rem;
+  font-weight: 400;
+  transform: translateY(-2px);
+}
+
+.window-control--close:hover {
+  background: #c42b1c;
+  color: #ffffff;
+}
+
+.intro-window__body {
+  padding: 1.15rem 1.15rem 1.35rem;
+  display: grid;
+  gap: 0.75rem;
+}
+
+.intro-window__line {
+  display: grid;
+  gap: 0.12rem;
+}
+
+.intro-window__name {
   margin: 0;
   padding-left: 0.9rem;
   font-family: 'JetBrains Mono', 'SFMono-Regular', Consolas, monospace;
-  color: var(--text);
+  font-size: 1rem;
+  font-weight: 400;
   line-height: 1.55;
+  color: var(--text);
 }
 
-.cursor {
-  margin-left: 0.2rem;
-  color: var(--accent);
-  animation: blink 1.1s steps(1) infinite;
+.intro-window__output {
+  margin: 0;
+  padding-left: 0.9rem;
+  font-family: 'JetBrains Mono', 'SFMono-Regular', Consolas, monospace;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.55;
+  color: var(--text);
 }
 
 @keyframes blink {
@@ -281,7 +381,8 @@ h3 {
   margin-top: 0.3rem;
   display: grid;
   gap: 0.55rem;
-  max-width: 74ch;
+  width: 100%;
+  max-width: none;
 }
 
 .terminal-copy p {
@@ -296,6 +397,13 @@ h3 {
   left: 0;
   color: var(--accent);
   font-family: 'JetBrains Mono', 'SFMono-Regular', Consolas, monospace;
+}
+
+.intro-window__prompt-end {
+  margin: 0.45rem 0 0;
+  font-family: 'JetBrains Mono', 'SFMono-Regular', Consolas, monospace;
+  color: var(--accent);
+  line-height: 1;
 }
 
 .button {
@@ -512,13 +620,20 @@ a:focus-visible {
 }
 
 @media (min-width: 760px) {
-  .hero,
   .section {
     padding: 1.9rem;
   }
 
   .section + .section {
     margin-top: 1.8rem;
+  }
+
+  .intro-window__bar {
+    padding-left: 1.45rem;
+  }
+
+  .intro-window__body {
+    padding: 1.25rem 1.45rem 1.6rem;
   }
 
   .contact-grid {
