@@ -2,7 +2,7 @@
 
 Portfolio personal profesional de Ignacio Fayos Gómez, orientado a perfil backend y con una base full stack separada en frontend y backend.
 
-## Stack previsto
+## Stack 
 
 - Frontend: Next.js con TypeScript
 - Backend: Laravel API
