@@ -14,6 +14,11 @@
   box-sizing: border-box;
 }
 
+html,
+body {
+  min-height: 100%;
+}
+
 body {
   margin: 0;
   font-family: 'Inter', 'Segoe UI', Roboto, sans-serif;
@@ -34,6 +39,82 @@ body {
 
 a {
   color: inherit;
+}
+
+.app-shell {
+  position: relative;
+  z-index: 1;
+}
+
+.background-grid {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+  background-color: #080b0f;
+  background-image:
+    radial-gradient(
+      circle 420px at var(--cursor-x, 50%) var(--cursor-y, 35%),
+      rgba(255, 183, 3, 0.13) 0%,
+      rgba(255, 183, 3, 0.055) 32%,
+      transparent 70%
+    ),
+    radial-gradient(
+      circle,
+      rgba(126, 139, 160, 0.28) 1px,
+      transparent 1.2px
+    );
+  background-size:
+    100% 100%,
+    24px 24px;
+  background-position:
+    center,
+    0 0;
+}
+
+.background-grid::before,
+.background-grid::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.background-grid::before {
+  background-image: radial-gradient(
+    circle,
+    rgba(255, 183, 3, 0.75) 1.35px,
+    transparent 1.75px
+  );
+  background-size: 24px 24px;
+  background-position: 0 0;
+  opacity: 0.9;
+  filter:
+    drop-shadow(0 0 4px rgba(255, 183, 3, 0.45))
+    drop-shadow(0 0 10px rgba(255, 183, 3, 0.18));
+  mask-image: radial-gradient(
+    circle 190px at var(--cursor-x, 50%) var(--cursor-y, 35%),
+    black 0%,
+    black 26%,
+    transparent 72%
+  );
+  -webkit-mask-image: radial-gradient(
+    circle 190px at var(--cursor-x, 50%) var(--cursor-y, 35%),
+    black 0%,
+    black 26%,
+    transparent 72%
+  );
+}
+
+.background-grid::after {
+  background: radial-gradient(
+    circle 240px at var(--cursor-x, 50%) var(--cursor-y, 35%),
+    rgba(255, 183, 3, 0.08) 0%,
+    rgba(255, 183, 3, 0.035) 34%,
+    transparent 72%
+  );
+  mix-blend-mode: screen;
 }
 
 .portfolio {
@@ -78,27 +159,6 @@ a {
   min-width: 0;
 }
 
-.topbar__mark,
-.topbar__path {
-  margin: 0;
-  font-family: 'JetBrains Mono', 'SFMono-Regular', Consolas, monospace;
-  font-size: 0.9rem;
-  color: var(--text);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.topbar__meta {
-  display: none;
-}
-.topbar__links {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 0.45rem;
-  flex-wrap: wrap;
-}
-
 .topbar__mark {
   margin: 0;
   width: 1.9rem;
@@ -108,26 +168,23 @@ a {
   display: grid;
   place-items: center;
   color: var(--accent);
+  font-family: 'JetBrains Mono', 'SFMono-Regular', Consolas, monospace;
   font-size: 0.78rem;
   background: rgba(240, 165, 0, 0.04);
 }
 
-.topbar__path,
-.topbar__meta {
+.topbar__path {
   margin: 0;
+  font-family: 'JetBrains Mono', 'SFMono-Regular', Consolas, monospace;
+  font-size: 0.95rem;
+  color: var(--text);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-.topbar__path {
-  font-size: 0.95rem;
-  color: var(--text);
-}
-
 .topbar__meta {
-  font-size: 0.72rem;
-  color: var(--text-muted);
+  display: none;
 }
 
 .topbar__links {
@@ -212,9 +269,11 @@ a {
     0 0 14px rgba(255, 183, 3, 0.22);
 }
 
-.bottombar__path {
-  font-size: 0.95rem;
-  color: var(--text);
+.bottombar__meta {
+  margin: 0.12rem 0 0;
+  font-family: 'JetBrains Mono', 'SFMono-Regular', Consolas, monospace;
+  font-size: 0.72rem;
+  color: rgba(159, 159, 159, 0.62);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -246,16 +305,6 @@ a {
   color: var(--text);
   border-color: rgba(255, 255, 255, 0.16);
   background: rgba(255, 255, 255, 0.035);
-}
-
-.bottombar__meta {
-  margin: 0.12rem 0 0;
-  font-family: 'JetBrains Mono', 'SFMono-Regular', Consolas, monospace;
-  font-size: 0.72rem;
-  color: rgba(159, 159, 159, 0.62);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .intro-window,
@@ -348,7 +397,6 @@ h3 {
   font-size: 1rem;
 }
 
-.hero__output,
 .cursor {
   margin-left: 0.2rem;
   color: var(--accent);
@@ -475,13 +523,6 @@ h3 {
   50% {
     opacity: 0;
   }
-}
-
-.hero__actions {
-  margin-top: 1.4rem;
-  display: flex;
-  gap: 0.6rem;
-  flex-wrap: wrap;
 }
 
 .terminal-copy {
@@ -706,10 +747,33 @@ a:focus-visible {
   outline-offset: 1px;
 }
 
+@media (pointer: coarse) {
+  .background-grid {
+    background-image:
+      radial-gradient(
+        circle 360px at 50% 35%,
+        rgba(255, 183, 3, 0.08) 0%,
+        rgba(255, 183, 3, 0.035) 40%,
+        transparent 72%
+      ),
+      radial-gradient(
+        circle,
+        rgba(126, 139, 160, 0.26) 1px,
+        transparent 1.2px
+      );
+  }
+
+  .background-grid::before,
+  .background-grid::after {
+    display: none;
+  }
+}
+
 @media (max-width: 759px) {
   .intro-stage {
     min-height: calc(100dvh - 11.8rem);
   }
+
   .topbar__inner {
     min-height: 72px;
     align-items: flex-start;
