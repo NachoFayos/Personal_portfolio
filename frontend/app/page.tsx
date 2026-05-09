@@ -1,3 +1,4 @@
+import { BottomBar } from '@/components/bottom-bar';
 import { Section } from '@/components/section';
 import { experiences, profile, projects, stackGroups } from '@/data/portfolio';
 
@@ -47,64 +48,66 @@ export default function HomePage() {
       </header>
 
       <main className="portfolio" id="inicio">
-      <section className="intro-window" aria-labelledby="hero-title">
-        <header className="intro-window__bar">
-          <p className="intro-window__title">nacho@portfolio:~</p>
+        <section className="intro-stage" aria-label="Presentación inicial">
+          <div className="intro-window" aria-labelledby="hero-title">
+            <header className="intro-window__bar">
+              <p className="intro-window__title">nacho@portfolio:~</p>
 
-          <div className="intro-window__controls" aria-hidden="true">
-            <span className="window-control">
-              <span className="window-control__minimize-icon">—</span>
-            </span>
+              <div className="intro-window__controls" aria-hidden="true">
+                <span className="window-control">
+                  <span className="window-control__minimize-icon">—</span>
+                </span>
 
-            <span className="window-control">
-              <span className="window-control__maximize-icon">□</span>
-            </span>
+                <span className="window-control">
+                  <span className="window-control__maximize-icon">□</span>
+                </span>
 
-            <span className="window-control window-control--close">
-              <span className="window-control__close-icon">×</span>
-            </span>
-          </div>
-        </header>
+                <span className="window-control window-control--close">
+                  <span className="window-control__close-icon">×</span>
+                </span>
+              </div>
+            </header>
 
-        <div className="intro-window__body">
-          <div className="intro-window__line">
-            <p className="section__command">$ whoami</p>
-            <h1 id="hero-title" className="intro-window__name">
-              {profile.name}
-            </h1>
-          </div>
+            <div className="intro-window__body">
+              <div className="intro-window__line">
+                <p className="section__command">$ whoami</p>
+                <h1 id="hero-title" className="intro-window__name">
+                  {profile.name}
+                </h1>
+              </div>
 
-          <div className="intro-window__line">
-            <p className="section__command">$ cat role.txt</p>
-            <p className="intro-window__output">{profile.headline}</p>
-          </div>
+              <div className="intro-window__line">
+                <p className="section__command">$ cat role.txt</p>
+                <p className="intro-window__output">{profile.headline}</p>
+              </div>
 
-          <div className="intro-window__line">
-            <p className="section__command">$ echo $LOCATION</p>
-            <p className="intro-window__output">Valencia, España</p>
-          </div>
+              <div className="intro-window__line">
+                <p className="section__command">$ echo $LOCATION</p>
+                <p className="intro-window__output">Valencia, España</p>
+              </div>
 
-          <div className="intro-window__line">
-            <p className="section__command">$ cat about.md</p>
-            <div className="terminal-copy" aria-label="Descripción profesional">
-              {aboutLines.map((line) => (
-                <p key={line}>{line.trim().endsWith('.') ? line.trim() : `${line.trim()}.`}</p>
-              ))}
+              <div className="intro-window__line">
+                <p className="section__command">$ cat about.md</p>
+                <div className="terminal-copy" aria-label="Descripción profesional">
+                  {aboutLines.map((line) => (
+                    <p key={line}>{line.trim().endsWith('.') ? line.trim() : `${line.trim()}.`}</p>
+                  ))}
+                </div>
+
+                <p className="intro-window__prompt-end" aria-hidden="true">
+                  $<span className="cursor">▋</span>
+                </p>
+              </div>
             </div>
-
-            <p className="intro-window__prompt-end" aria-hidden="true">
-              $<span className="cursor">▋</span>
-            </p>
           </div>
-        </div>
-      </section>
+        </section>
 
         <Section
           id="experiencia"
           title="Experiencia"
           commandLabel="$ ls experiencia/"
           variant="experience"
-        >
+          >
           <div className="flow-list">
             {experiences.map((experience) => (
               <article className="entry entry--experience" key={experience.company}>
@@ -132,7 +135,7 @@ export default function HomePage() {
           title="Proyectos"
           commandLabel="$ ls proyectos --featured"
           variant="projects"
-        >
+          >
           <div className="flow-list projects-grid">
             {projects.map((project) => (
               <article className="entry entry--project" key={project.name}>
@@ -179,7 +182,7 @@ export default function HomePage() {
           commandLabel="$ contact --info"
           subtitle="Disponible para oportunidades backend y colaboración técnica."
           variant="contact"
-        >
+          >
           <div className="contact-grid">
             <div className="entry">
               <h3>canales</h3>
@@ -246,6 +249,12 @@ export default function HomePage() {
           </div>
         </Section>
       </main>
+
+      <BottomBar
+        githubUrl={profile.contact.github}
+        linkedinUrl={profile.contact.linkedin}
+        email={profile.contact.email}
+      />
     </>
   );
 }
