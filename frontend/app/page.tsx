@@ -1,5 +1,6 @@
 import { BottomBar } from '@/components/bottom-bar';
 import { Section } from '@/components/section';
+import { SectionIndicator } from '@/components/section-indicator';
 import { experiences, profile, projects, stackGroups } from '@/data/portfolio';
 
 type QuickLink = {
@@ -47,8 +48,10 @@ export default function HomePage() {
         </div>
       </header>
 
+      <SectionIndicator />
+
       <main className="portfolio" id="inicio">
-        <section className="intro-stage" aria-label="Presentación inicial">
+        <section id="inicio" className="intro-stage" aria-label="Presentación inicial">
           <div className="intro-window" aria-labelledby="hero-title">
             <header className="intro-window__bar">
               <p className="intro-window__title">nacho@portfolio:~</p>

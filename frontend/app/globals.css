@@ -19,6 +19,10 @@ body {
   min-height: 100%;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   margin: 0;
   font-family: 'Inter', 'Segoe UI', Roboto, sans-serif;
@@ -245,6 +249,99 @@ a {
   color: var(--text);
   border-color: rgba(255, 255, 255, 0.16);
   background: rgba(255, 255, 255, 0.035);
+}
+
+.section-indicator {
+  position: fixed;
+  top: 50%;
+  right: 2rem;
+  transform: translateY(-50%);
+  z-index: 40;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.95rem;
+}
+
+.section-indicator__track {
+  position: absolute;
+  top: 0.3rem;
+  bottom: 0.3rem;
+  width: 1px;
+  background: rgba(120, 130, 145, 0.22);
+}
+
+.section-indicator__item {
+  position: relative;
+  width: 1.2rem;
+  height: 1.2rem;
+  display: grid;
+  place-items: center;
+  text-decoration: none;
+}
+
+.section-indicator__dot {
+  width: 0.62rem;
+  height: 0.62rem;
+  border-radius: 999px;
+  background: rgba(58, 65, 74, 0.82);
+  border: none;
+  box-shadow: none;
+  transition:
+    transform 180ms ease,
+    background-color 180ms ease,
+    box-shadow 180ms ease,
+    opacity 180ms ease;
+}
+
+.section-indicator__item--active .section-indicator__dot {
+  background: #ffb703;
+  box-shadow:
+    0 0 12px rgba(255, 200, 87, 0.5),
+    0 0 30px rgba(255, 200, 87, 0.2);
+  transform: scale(1.45);
+}
+
+.section-indicator__item:hover .section-indicator__dot {
+  background: rgba(90, 98, 110, 0.95);
+}
+
+.section-indicator__item--active:hover .section-indicator__dot {
+  background: #ffb703;
+}
+
+.section-indicator__label {
+  position: absolute;
+  right: calc(100% + 0.9rem);
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 0;
+  pointer-events: none;
+  white-space: nowrap;
+  font-family: 'JetBrains Mono', 'SFMono-Regular', Consolas, monospace;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: rgba(120, 130, 145, 0.9);
+  background: transparent;
+  border: none;
+  padding: 0;
+  transition:
+    opacity 150ms ease,
+    transform 150ms ease,
+    color 150ms ease;
+}
+
+.section-indicator__item:hover .section-indicator__label,
+.section-indicator__item:focus-visible .section-indicator__label {
+  opacity: 1;
+  transform: translate(-0.25rem, -50%);
+}
+
+.section-indicator__item--active .section-indicator__label {
+  color: #ffb703;
+  text-shadow:
+    0 0 8px rgba(255, 183, 3, 0.45),
+    0 0 18px rgba(255, 183, 3, 0.22);
 }
 
 .intro-window,
@@ -705,6 +802,12 @@ a:focus-visible {
 
   .background-grid::before,
   .background-grid::after {
+    display: none;
+  }
+}
+
+@media (max-width: 1023px) {
+  .section-indicator {
     display: none;
   }
 }
