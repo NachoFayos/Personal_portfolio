@@ -1,5 +1,5 @@
 import { BottomBar } from '@/components/bottom-bar';
-import { Section } from '@/components/section';
+import { WindowSection } from '@/components/window-section';
 import { SectionIndicator } from '@/components/section-indicator';
 import { experiences, profile, projects, stackGroups } from '@/data/portfolio';
 
@@ -52,24 +52,7 @@ export default function HomePage() {
 
       <main className="portfolio" id="inicio">
         <section id="inicio" className="intro-stage" aria-label="Presentación inicial">
-          <div className="intro-window" aria-labelledby="hero-title">
-            <header className="intro-window__bar">
-              <p className="intro-window__title">nacho@portfolio:~</p>
-
-              <div className="intro-window__controls" aria-hidden="true">
-                <span className="window-control">
-                  <span className="window-control__minimize-icon">—</span>
-                </span>
-
-                <span className="window-control">
-                  <span className="window-control__maximize-icon">□</span>
-                </span>
-
-                <span className="window-control window-control--close">
-                  <span className="window-control__close-icon">×</span>
-                </span>
-              </div>
-            </header>
+        <WindowSection id="inicio-window" barTitle="nacho@portfolio:~" variant="intro" windowLabel="intro principal">
 
             <div className="intro-window__body">
               <div className="intro-window__line">
@@ -102,10 +85,10 @@ export default function HomePage() {
                 </p>
               </div>
             </div>
-          </div>
+            </WindowSection>
         </section>
 
-        <Section
+        <WindowSection
           id="experiencia"
           title="Experiencia"
           commandLabel="$ ls experiencia/"
@@ -131,9 +114,9 @@ export default function HomePage() {
               </article>
             ))}
           </div>
-        </Section>
+          </WindowSection>
 
-        <Section
+          <WindowSection
           id="proyectos"
           title="Proyectos"
           commandLabel="$ ls proyectos --featured"
@@ -161,9 +144,9 @@ export default function HomePage() {
               </article>
             ))}
           </div>
-        </Section>
+          </WindowSection>
 
-        <Section id="stack" title="Stack técnico" commandLabel="$ stack --list" variant="stack">
+          <WindowSection id="stack" title="Stack técnico" commandLabel="$ stack --list" variant="stack">
           <div className="flow-list">
             {stackGroups.map((group) => (
               <article className="entry" key={group.title}>
@@ -177,9 +160,9 @@ export default function HomePage() {
               </article>
             ))}
           </div>
-        </Section>
+          </WindowSection>
 
-        <Section
+          <WindowSection
           id="contacto"
           title="Contacto"
           commandLabel="$ contact --info"
@@ -250,7 +233,7 @@ export default function HomePage() {
               </button>
             </form>
           </div>
-        </Section>
+          </WindowSection>
       </main>
 
       <BottomBar
