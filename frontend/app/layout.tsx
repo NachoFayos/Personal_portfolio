@@ -1,3 +1,4 @@
+import { BackgroundGrid } from '@/components/background-grid';
 import './globals.css';
 
 export const metadata = {
@@ -8,7 +9,10 @@ export const metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="es">
-      <body>{children}</body>
+      <body>
+        <BackgroundGrid />
+        <div className="app-shell">{children}</div>
+      </body>
     </html>
   );
 }
